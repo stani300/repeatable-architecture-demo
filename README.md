@@ -31,6 +31,11 @@ Fleet figures are directional planning values, not commitments.
 - **Fully client-side** — no backend, no database, no API keys. Runs offline.
 - **Tiny and fast** — no chart library; loads instantly for a live demo.
 
+## 🌐 Live Hosted Demo
+
+- **Public Production Link:** [https://repeatable.shanezerotrust.com](https://repeatable.shanezerotrust.com)
+- **Cloudflare Pages Domain:** [https://repeatable-architecture-demo.pages.dev](https://repeatable-architecture-demo.pages.dev)
+
 ## Run locally
 
 Prerequisites: Node.js 18+
@@ -38,6 +43,8 @@ Prerequisites: Node.js 18+
 1. `npm install`
 2. `npm run dev` → open http://localhost:3000
 3. `npm run build` → static files in `dist/`
+4. `npm run deploy` → deploy updates directly to Cloudflare Pages
 
 In the demo: switch partners, drag the fleet slider, and hit **Deploy across fleet**
 to replay the fan-out. **Copy** grabs the Terraform.
+
