@@ -32,7 +32,11 @@ export function FleetFanout({ partner, count, animKey, mode }: FleetFanoutProps)
             <div className="flex items-center gap-1.5 min-w-0">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
               <span className="font-mono text-[11px] text-[var(--ink)] font-medium truncate">
-                {partner.type === 'MSSP' || partner.type === 'PowerUP' ? 'Customer' : 'Enterprise'} {String(i + 1).padStart(2, '0')}
+                {partner.type === 'MSSP' || partner.type === 'PowerUP'
+                  ? 'Customer'
+                  : partner.type === 'Service Provider'
+                  ? 'Tenant'
+                  : 'Enterprise'} {String(i + 1).padStart(2, '0')}
               </span>
             </div>
             {mode === 'ai' || mode === 'dual' ? (

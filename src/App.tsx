@@ -9,15 +9,25 @@ const TYPE_STYLE: Record<Partner['type'], string> = {
   GSI: 'bg-violet-50 text-[var(--control)] border-violet-200',
   PowerUP: 'bg-orange-50 text-[var(--cf)] border-orange-200',
   MSSP: 'bg-sky-50 text-[var(--flow)] border-sky-200',
+  'Service Provider': 'bg-emerald-50 text-emerald-700 border-emerald-200',
 };
 
 export default function App() {
   const [partnerId, setPartnerId] = useState(PARTNERS[0].id);
   const [fleet, setFleet] = useState(PARTNERS[0].defaultFleet);
   const [mode, setMode] = useState<BlueprintMode>('dual');
+  const [categoryFilter, setCategoryFilter] = useState<'ALL' | 'Service Provider' | 'GSI' | 'SPECIALIZED'>('ALL');
   const [animKey, setAnimKey] = useState(0);
   const [copied, setCopied] = useState(false);
   const [isSlideDeckOpen, setIsSlideDeckOpen] = useState(false);
+
+  const filteredPartners = PARTNERS.filter((p) => {
+    if (categoryFilter === 'ALL') return true;
+    if (categoryFilter === 'Service Provider') return p.type === 'Service Provider';
+    if (categoryFilter === 'GSI') return p.type === 'GSI';
+    if (categoryFilter === 'SPECIALIZED') return p.type === 'MSSP' || p.type === 'PowerUP';
+    return true;
+  });
 
   const partner = PARTNERS.find((p) => p.id === partnerId)!;
 
@@ -160,12 +170,78 @@ module "${partner.moduleName}_ai" {
       <main className="flex-1 max-w-[1150px] w-full mx-auto px-5 py-6">
         {/* Partner picker */}
         <div className="mb-5">
-          <div className="text-xs font-semibold text-[var(--ink-3)] uppercase tracking-wide mb-2 flex items-center justify-between">
-            <span>Select Cloudflare Partner Alliance</span>
-            <span className="text-[11px] font-normal text-slate-500 italic">Publicly Documented Motions</span>
+          <div className="flex items-center justify-between flex-wrap gap-2 mb-2.5">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-[var(--ink-3)] uppercase tracking-wide">
+                Select Cloudflare Partner Alliance
+              </span>
+              <span className="text-[11px] font-normal text-slate-500 italic hidden sm:inline">
+                Publicly Documented Motions
+              </span>
+            </div>
+
+            {/* Partner Alliance Category Filter Tabs */}
+            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs">
+              <button
+                onClick={() => setCategoryFilter('ALL')}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition ${
+                  categoryFilter === 'ALL'
+                    ? 'bg-white text-slate-900 shadow-sm border border-slate-200'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                All ({PARTNERS.length})
+              </button>
+              <button
+                onClick={() => {
+                  setCategoryFilter('Service Provider');
+                  if (partner.type !== 'Service Provider') {
+                    selectPartner(PARTNERS.find((p) => p.type === 'Service Provider')!);
+                  }
+                }}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition flex items-center gap-1 ${
+                  categoryFilter === 'Service Provider'
+                    ? 'bg-emerald-600 text-white shadow-sm'
+                    : 'text-emerald-700 hover:text-emerald-900'
+                }`}
+              >
+                Service Providers ({PARTNERS.filter((p) => p.type === 'Service Provider').length})
+              </button>
+              <button
+                onClick={() => {
+                  setCategoryFilter('GSI');
+                  if (partner.type !== 'GSI') {
+                    selectPartner(PARTNERS.find((p) => p.type === 'GSI')!);
+                  }
+                }}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition ${
+                  categoryFilter === 'GSI'
+                    ? 'bg-violet-600 text-white shadow-sm'
+                    : 'text-violet-700 hover:text-violet-900'
+                }`}
+              >
+                GSIs ({PARTNERS.filter((p) => p.type === 'GSI').length})
+              </button>
+              <button
+                onClick={() => {
+                  setCategoryFilter('SPECIALIZED');
+                  if (partner.type !== 'MSSP' && partner.type !== 'PowerUP') {
+                    selectPartner(PARTNERS.find((p) => p.type === 'MSSP' || p.type === 'PowerUP')!);
+                  }
+                }}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition ${
+                  categoryFilter === 'SPECIALIZED'
+                    ? 'bg-sky-600 text-white shadow-sm'
+                    : 'text-sky-700 hover:text-sky-900'
+                }`}
+              >
+                MSSP &amp; PowerUP ({PARTNERS.filter((p) => p.type === 'MSSP' || p.type === 'PowerUP').length})
+              </button>
+            </div>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-            {PARTNERS.map((p) => {
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
+            {filteredPartners.map((p) => {
               const active = p.id === partnerId;
               return (
                 <button
