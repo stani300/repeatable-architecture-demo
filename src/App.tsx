@@ -3,7 +3,7 @@ import { PARTNERS, Partner, BlueprintMode, DISCLAIMER } from './data/partners';
 import { FleetFanout } from './components/FleetFanout';
 import { TapImpactPanel } from './components/TapImpactPanel';
 import { SlideDeckModal } from './components/SlideDeckModal';
-import { Layers, Rocket, ArrowRight, Copy, Check, Building2, Boxes, Sparkles, Bot, Shield, Presentation } from 'lucide-react';
+import { Layers, Rocket, ArrowRight, Copy, Check, Building2, Boxes, Sparkles, Bot, Shield, Presentation, Download } from 'lucide-react';
 
 const TYPE_STYLE: Record<Partner['type'], string> = {
   GSI: 'bg-violet-50 text-[var(--control)] border-violet-200',
@@ -162,6 +162,18 @@ module "${partner.moduleName}_ai" {
               >
                 <Presentation className="w-4 h-4 text-orange-400" /> Presentation Slides
               </button>
+
+              {/* Download PDF Guide Button */}
+              <a
+                href="/Cloudflare_PSA_Demo_Guided_Walkthrough.pdf"
+                download="Cloudflare_PSA_Demo_Guided_Walkthrough.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-bold rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 text-white px-3.5 py-2 hover:from-orange-600 hover:to-amber-700 transition shadow-sm"
+                title="Download Executive Walkthrough PDF"
+              >
+                <Download className="w-4 h-4" /> Download PDF Guide
+              </a>
             </div>
           </div>
         </div>

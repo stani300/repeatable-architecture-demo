@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, ChevronLeft, ChevronRight, Presentation, TrendingUp, Zap, ShieldCheck, Bot, CheckCircle, ArrowRight, Sparkles, Shield } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Presentation, TrendingUp, Zap, ShieldCheck, Bot, CheckCircle, ArrowRight, Sparkles, Shield, Download } from 'lucide-react';
 import { Partner, BlueprintMode, PARTNERS, getPartnerMetrics } from '../data/partners';
 
 interface SlideDeckModalProps {
@@ -101,6 +101,16 @@ export function SlideDeckModal({ isOpen, onClose, partner = PARTNERS[0], fleetCo
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
+            <a
+              href="/Cloudflare_PSA_Demo_Guided_Walkthrough.pdf"
+              download="Cloudflare_PSA_Demo_Guided_Walkthrough.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-600/90 hover:bg-orange-500 text-white text-xs font-semibold transition"
+              title="Download Executive Walkthrough PDF"
+            >
+              <Download className="w-3.5 h-3.5" /> PDF Guide
+            </a>
             <button
               onClick={onClose}
               className="p-2 rounded-lg bg-slate-800/80 hover:bg-red-500/20 hover:text-red-400 text-slate-400 transition"
